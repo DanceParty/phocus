@@ -12,7 +12,7 @@ const Container = styled.div`
 export function Footer() {
   return (
     <Container>
-      <Button>Add Task 💃</Button>
+      <Button>Get Focused! 💃</Button>
     </Container>
   );
 }
