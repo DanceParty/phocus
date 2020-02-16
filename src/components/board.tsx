@@ -1,16 +1,8 @@
 import * as React from "react";
-import styled, { StyledComponent } from "styled-components";
+import styled from "styled-components";
 import { DropResult, DraggableLocation, DroppableProvided, DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Column } from "./column";
 import { reorder, reorderTaskMap } from "../utils/reorder";
-
-interface ParentContainerProps {
-  height: number;
-}
-
-const ParentContainer: StyledComponent<"div", any, ParentContainerProps, never> = styled.div`
-  height: ${(props: ParentContainerProps) => props.height};
-`;
 
 const Container = styled.div`
   display: inline-flex;
@@ -22,22 +14,11 @@ interface Props {
   initial: {
     [key: string]: string[];
   };
-  withScrollableColumns?: boolean;
-  containerHeight?: string;
-}
-
-interface State {
-  columns: {
-    [key: string]: string[];
-  };
-  ordered: string[];
 }
 
 export function Board(props: Props) {
   const [columns, setColumns] = React.useState<{ [key: string]: string[] }>(props.initial);
   const [ordered, setOrdered] = React.useState<string[]>(Object.keys(props.initial));
-
-  let boardRef: HTMLElement | undefined;
 
   const onDragEnd = (result: DropResult) => {
     if (result.combine) {
@@ -95,8 +76,7 @@ export function Board(props: Props) {
           {(provided: DroppableProvided) => (
             <Container ref={provided.innerRef} {...provided.droppableProps}>
               {ordered.map((key: string, index: number) => {
-                console.log(columns[key]);
-                return <Column key={key} index={index} title={key} data={columns[key]} isScrollable={false} />;
+                return <Column key={key} index={index} title={key} data={columns[key]} />;
               })}
               {provided.placeholder}
             </Container>

@@ -13,7 +13,6 @@ interface Props {
 
 interface ItemProps {
   isDragging: boolean;
-  isGroupedOver: boolean;
   ref: any;
   "data-is-dragging": boolean;
   "data-index"?: number;

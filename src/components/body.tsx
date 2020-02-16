@@ -1,8 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Board } from "./board";
-import { List } from "./list";
-import { ListItem } from "./list-item";
 
 const TaskMap: { [key: string]: string[] } = {
   "Backlog 📚": ["Build out the database", "Connect my application to the database", "Make a ton of money"],

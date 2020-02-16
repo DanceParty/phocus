@@ -9,7 +9,6 @@ import {
   DraggableStateSnapshot
 } from "react-beautiful-dnd";
 import { ListItem } from "./list-item";
-import { Content } from "./typography";
 
 interface ContainerProps {
   isDraggingOver: boolean;
@@ -30,29 +29,11 @@ const DropZone = styled.div`
   min-height: ${scrollContainerHeight}px;
 `;
 
-const ScrollContainer = styled.div`
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: ${scrollContainerHeight}px;
-`;
-
-interface Props {
-  listId?: string;
-  listType?: string;
-  data: string[];
-  title?: string;
-}
-
 const InnerDataList = (props: { data: string[] }): any => {
   return props.data.map((task: string, index: number) => (
     <Draggable key={task} draggableId={task} index={index}>
       {(dragProvided: DraggableProvided, dragSnapshot: DraggableStateSnapshot) => (
-        <ListItem
-          key={task}
-          isDragging={dragSnapshot.isDragging}
-          isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
-          provided={dragProvided}
-        >
+        <ListItem key={task} isDragging={dragSnapshot.isDragging} provided={dragProvided}>
           {task}
         </ListItem>
       )}
@@ -65,7 +46,6 @@ const InnerDataListWrapper = React.memo(InnerDataList);
 interface InnerListProps {
   dropProvided: DroppableProvided;
   data: string[];
-  title?: string;
 }
 
 function InnerList(props: InnerListProps) {
@@ -79,6 +59,12 @@ function InnerList(props: InnerListProps) {
   );
 }
 
+interface Props {
+  listId?: string;
+  listType?: string;
+  data: string[];
+}
+
 export function List(props: Props) {
   return (
     <Droppable droppableId={props.listId || "LIST"} type={props.listType}>
@@ -88,7 +74,7 @@ export function List(props: Props) {
           isDraggingFrom={Boolean(dropSnapshot.draggingFromThisWith)}
           {...dropProvided.droppableProps}
         >
-          <InnerList data={props.data} title={props.title} dropProvided={dropProvided} />
+          <InnerList data={props.data} dropProvided={dropProvided} />
         </Container>
       )}
     </Droppable>
